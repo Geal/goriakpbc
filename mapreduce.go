@@ -10,17 +10,17 @@ import (
 // build it by adding different stages.
 type MapReduce struct {
 	client  *Client
-	inputs  [][]string
+	inputs  map[string]string
 	phases  []string
 	request string
 }
 
 func (c *Client) MapReduce() *MapReduce {
-	return &MapReduce{client: c, inputs: make([][]string, 0), phases: make([]string, 0), request: ""}
+	return &MapReduce{client: c, inputs: make(map[string]string, 0), phases: make([]string, 0), request: ""}
 }
 
 func (mr *MapReduce) Add(bucket string, key string) {
-	mr.inputs = append(mr.inputs, []string{bucket, key})
+	mr.inputs[bucket] = key
 }
 
 func (mr *MapReduce) LinkBucket(name string, keep bool) {
